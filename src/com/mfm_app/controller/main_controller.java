@@ -12,5 +12,10 @@ public class main_controller {
 		ModelAndView mav = new ModelAndView("welcome");
 		return mav;
 	}
-
+	@RequestMapping("/moving_on")
+	public ModelAndView moving_on() {
+		ModelAndView mav = new ModelAndView("moving_on");
+		return mav;
+	}
+	
 }
