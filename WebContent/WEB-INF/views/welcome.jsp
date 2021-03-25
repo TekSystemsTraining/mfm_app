@@ -5,13 +5,41 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<style><%@include file="/WEB-INF/resources/css/welcome.css"%></style>
+<link rel="stylesheet" type= "text/css" href="/mfm_app/resources/css/welcome.css" >
+<script type="text/javascript" src="/mfm_app/resources/js/welcome.js"></script>
+    <style>
+        body{
+            background-color: dimgray;
+        }
+      .login-form {
+        width: 340px;
+        margin: 50px auto;
+      }
+      .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+      .login-form h2 {
+        margin: 0 0 15px;
+      }
+      .form-control,
+      .btn {
+        min-height: 38px;
+        border-radius: 2px;
+      }
+      .btn {
+        font-size: 15px;
+        font-weight: bold;
+      }
+    </style>
 <title>Insert title here</title>
 </head>
 <body>
 <h1 id="heading"> we doing the things fam</h1>
-<div class="card" style="width: 18rem;">
-<form role="form" action="moving_on">
+
+<form role="form" class="card login-form px-2 py-2" action="moving_on" style="width: 18rem;">
 	<div class="row">
 		<div class="col">
 			<label for="inputEmail">email</label>
@@ -32,9 +60,9 @@
 			<input type="checkbox">check me out
 		</label>
 	</div>
-	<button type="submit" class="btn btn-default">Submit</button>
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
