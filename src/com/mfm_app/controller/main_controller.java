@@ -7,15 +7,37 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class main_controller {
 	
-	@RequestMapping("/")
+	@RequestMapping({"/", "/landing_page"})
 	public ModelAndView welcome() {
-		ModelAndView mav = new ModelAndView("welcome");
+		ModelAndView mav = new ModelAndView("landing_page");
 		return mav;
 	}
-	@RequestMapping("/moving_on")
-	public ModelAndView moving_on() {
-		ModelAndView mav = new ModelAndView("moving_on");
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
+	@RequestMapping("/profile_page")
+	public ModelAndView profile_page() {
+		ModelAndView mav = new ModelAndView("profile_page");
 		return mav;
 	}
 	
+	@RequestMapping("/workout")
+	public ModelAndView workout() {
+		ModelAndView mav = new ModelAndView("workout");
+		return mav;
+	}
+	
+	@RequestMapping("/leaderboard")
+	public ModelAndView leaderboard() {
+		ModelAndView mav = new ModelAndView("leaderboard");
+		return mav;
+	}
+
+	@RequestMapping("/register")
+	public ModelAndView register() {
+		ModelAndView mav = new ModelAndView("register");
+		return mav;
+	}
 }
