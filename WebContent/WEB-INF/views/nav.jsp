@@ -11,7 +11,7 @@
 		<ul class="navbar-nav mr-auto">
 
 			<li class="nav-item active"><a class="nav-link"
-				data-value="profile_page" href="profile_page">My Profile</a></li>
+				data-value="/profile_page" href="profile_page">My Profile</a></li>
 			<li class="nav-item"><a class="nav-link" data-value="workout"
 				href="workout">Start Workout</a></li>
 			<li class="nav-item"><a class="nav-link"
