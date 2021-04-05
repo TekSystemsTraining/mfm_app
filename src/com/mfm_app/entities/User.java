@@ -1,40 +1,79 @@
 package com.mfm_app.entities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 public class User {
 
 	@Id
-	@Column(name = "username", length = 50)	
+	@Column(name = "username", length = 50)
 	private String username;
-	
+
 	@Column(name = "password", length = 50, nullable = false)
 	private String password;
-	
-	@Column(name= "total_workouts", nullable = true)
+
+	@Column(name = "total_workouts", nullable = true)
 	private int total_workouts;
-	
-	@Column(name= "total_weight_lifted", nullable = true)
-	private Integer total_weight_lifted;
+
+	@Column(name = "total_weight_lifted", nullable = true)
+	private Double total_weight_lifted;
+
+	@Column(name = "workouts_completed")
+	@OneToMany(targetEntity = Workout.class)
+	private List<Workout> workouts_completed;
+
+	@Column(name = "primary_bodypart_array")
+	private ArrayList<Integer> primary_bodypart_array;
+
+//	@ElementCollection
+//	@CollectionTable(name = "users_exercises", joinColumns = 
+//		{@JoinColumn(name = "username_id", referencedColumnName = "id") })
+//
+//	@MapKeyColumn(name = "primary_bodypart")
+//	@Column(name = "count")
+//	private Map<String, Integer> primary_exercise_count;
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public User(String username, String password, int total_workouts, Integer total_weight_lifted) {
+	public User(String username, String password, int total_workouts, Double total_weight_lifted) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.total_workouts = total_workouts;
 		this.total_weight_lifted = total_weight_lifted;
+		this.primary_bodypart_array = new ArrayList<Integer>();
+
+		populate_arraylist();
+//		this.primary_exercise_count = new HashMap<String, Integer>();
+//		populate_hashmap();
+
 	}
+
+	private void populate_arraylist() {
+		primary_bodypart_array.add(0, 0);
+		primary_bodypart_array.add(1, 0);
+		primary_bodypart_array.add(2, 0);
+		primary_bodypart_array.add(3, 0);
+	}
+
+	//
+//	private void populate_hashmap() {
+//		primary_exercise_count.put("chest", 0);
+//		primary_exercise_count.put("back", 0);
+//		primary_exercise_count.put("legs", 0);
+//	}
 
 	public String getUsername() {
 		return username;
@@ -60,11 +99,11 @@ public class User {
 		this.total_workouts = total_workouts;
 	}
 
-	public Integer getTotal_weight_lifted() {
+	public Double getTotal_weight_lifted() {
 		return total_weight_lifted;
 	}
 
-	public void setTotal_weight_lifted(Integer total_weight_lifted) {
+	public void setTotal_weight_lifted(Double total_weight_lifted) {
 		this.total_weight_lifted = total_weight_lifted;
 	}
 
@@ -113,5 +152,5 @@ public class User {
 		return "User [username=" + username + ", password=" + password + ", total_workouts=" + total_workouts
 				+ ", total_weight_lifted=" + total_weight_lifted + "]";
 	}
-	
+
 }
