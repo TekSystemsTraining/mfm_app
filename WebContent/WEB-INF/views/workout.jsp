@@ -185,6 +185,32 @@
 					Workout</button>
 
 			</div>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal"
+				data-target="#modalCenter">Complete Workout</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="modalCenter" tabindex="-1"
+				role="dialog" aria-labelledby="modalCenterTitle"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalLongTitle">Complete Workout</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true"></span>
+							</button>
+						</div>
+						<div class="modal-body">Have you entered everything for this workout? If it is complete hit save.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
