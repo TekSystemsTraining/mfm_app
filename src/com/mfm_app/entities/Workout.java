@@ -27,21 +27,70 @@ public class Workout {
 	@Column(name = "total_weight_lifted")
 	private Double total_weight_lifted;
 	
-	@Column(name = "exercises_completed")
-	private String[] exercises_completed;
+	@Column(name = "exercise_one_completed")
+	private String exercise_one_completed;
+	
+	@Column(name = "exercise_two_completed")
+	private String exercise_two_completed;
+	
+	@Column(name = "exercise_three_completed")
+	private String exercise_three_completed;
 
 	public Workout() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Workout(int id, Date date_of_workout, Double total_weight_lifted, String[] exercises_completed) {
+
+
+	public Workout(int id, Date date_of_workout, Double total_weight_lifted, String exercise_one_completed,
+			String exercise_two_completed, String exercise_three_completed) {
 		super();
 		this.id = id;
 		this.date_of_workout = date_of_workout;
 		this.total_weight_lifted = total_weight_lifted;
-		this.exercises_completed = exercises_completed;
+		this.exercise_one_completed = exercise_one_completed;
+		this.exercise_two_completed = exercise_two_completed;
+		this.exercise_three_completed = exercise_three_completed;
 	}
+
+
+
+	public String getExercise_one_completed() {
+		return exercise_one_completed;
+	}
+
+
+
+	public void setExercise_one_completed(String exercise_one_completed) {
+		this.exercise_one_completed = exercise_one_completed;
+	}
+
+
+
+	public String getExercise_two_completed() {
+		return exercise_two_completed;
+	}
+
+
+
+	public void setExercise_two_completed(String exercise_two_completed) {
+		this.exercise_two_completed = exercise_two_completed;
+	}
+
+
+
+	public String getExercise_three_completed() {
+		return exercise_three_completed;
+	}
+
+
+
+	public void setExercise_three_completed(String exercise_three_completed) {
+		this.exercise_three_completed = exercise_three_completed;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -67,24 +116,22 @@ public class Workout {
 		this.total_weight_lifted = total_weight_lifted;
 	}
 
-	public String[] getExercises_completed() {
-		return exercises_completed;
-	}
 
-	public void setExercises_completed(String[] exercises_completed) {
-		this.exercises_completed = exercises_completed;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date_of_workout == null) ? 0 : date_of_workout.hashCode());
-		result = prime * result + Arrays.hashCode(exercises_completed);
+		result = prime * result + ((exercise_one_completed == null) ? 0 : exercise_one_completed.hashCode());
+		result = prime * result + ((exercise_three_completed == null) ? 0 : exercise_three_completed.hashCode());
+		result = prime * result + ((exercise_two_completed == null) ? 0 : exercise_two_completed.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((total_weight_lifted == null) ? 0 : total_weight_lifted.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -100,7 +147,20 @@ public class Workout {
 				return false;
 		} else if (!date_of_workout.equals(other.date_of_workout))
 			return false;
-		if (!Arrays.equals(exercises_completed, other.exercises_completed))
+		if (exercise_one_completed == null) {
+			if (other.exercise_one_completed != null)
+				return false;
+		} else if (!exercise_one_completed.equals(other.exercise_one_completed))
+			return false;
+		if (exercise_three_completed == null) {
+			if (other.exercise_three_completed != null)
+				return false;
+		} else if (!exercise_three_completed.equals(other.exercise_three_completed))
+			return false;
+		if (exercise_two_completed == null) {
+			if (other.exercise_two_completed != null)
+				return false;
+		} else if (!exercise_two_completed.equals(other.exercise_two_completed))
 			return false;
 		if (id != other.id)
 			return false;
@@ -112,11 +172,14 @@ public class Workout {
 		return true;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Workout [id=" + id + ", date_of_workout=" + date_of_workout + ", total_weight_lifted="
-				+ total_weight_lifted + ", exercises_completed=" + Arrays.toString(exercises_completed) + "]";
+				+ total_weight_lifted + ", exercise_one_completed=" + exercise_one_completed
+				+ ", exercise_two_completed=" + exercise_two_completed + ", exercise_three_completed="
+				+ exercise_three_completed + "]";
 	}
-	
 	
 }

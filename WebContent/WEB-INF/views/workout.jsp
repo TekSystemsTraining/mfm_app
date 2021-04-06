@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <html lang="en">
 <head>
@@ -28,19 +29,18 @@
 	</div>
 
 	<div class="about" id="grid">
-		<form action="save_workout" method="POST">
+		<form:form action="save_workout" method="GET">
 			<div class="container" style="width: 50rem">
 				<div class="description"></div>
 				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
-							<select name="category">
-								<option value="-" selected="selected">please select an
-									exercise</option>
-								<c:forEach items="${exercises}" var="exercise">
-									<option value="${exercise}">${exercise}</option>
-								</c:forEach>
-							</select>
+							<form:select path="exercise_one_completed">
+								<form:option value="" label="--Select--" />
+
+								<form:options items="${exercises}" itemsValue="id"/>
+
+							</form:select>
 						</div>
 						<div class="col">
 							<div class="row">
@@ -80,13 +80,12 @@
 				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
-							<select name="category">
-								<option value="-" selected="selected">please select an
-									exercise</option>
-								<c:forEach items="${exercises}" var="exercise">
-									<option value="${exercise}">${exercise}</option>
-								</c:forEach>
-							</select>
+							<form:select path="exercise_two_completed">
+								<form:option value="" label="--Select--" />
+
+								<form:options items="${exercises}"/>
+
+							</form:select>
 						</div>
 						<div class="col">
 							<div class="row">
@@ -126,13 +125,12 @@
 				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
-							<select name="category">
-								<option value="-" selected="selected">please select an
-									exercise</option>
-								<c:forEach items="${exercises}" var="exercise">
-									<option value="${exercise}">${exercise}</option>
-								</c:forEach>
-							</select>
+							<form:select path="exercise_three_completed">
+								<form:option value="" label="--Select--" />
+
+								<form:options items="${exercises}"/>
+
+							</form:select>
 						</div>
 						<div class="col">
 							<div class="row">
@@ -195,7 +193,9 @@
 							</div>
 							<div class="modal-body form-group">
 								<h2 id="total_weight"></h2>
-								<input type="hidden" name="total_weight_lifted" id="total_weight_lifted" value=""/>
+								<input type="hidden" name="total_weight_lifted"
+									id="total_weight_lifted" value="" /> <input type="hidden"
+									name="exercises_completed" id="exercises_completed" value="" />
 								Have you entered everything for this workout? If it is complete
 								hit save.
 							</div>
@@ -213,7 +213,7 @@
 
 				</div>
 			</div>
-		</form>
+		</form:form>
 	</div>
 
 </body>

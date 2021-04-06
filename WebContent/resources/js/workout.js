@@ -44,7 +44,17 @@ function workout_total() {
 	total_exercise(1, true);
 	total_exercise(2, true);
 	total_exercise(3, true);
+//	var exercises_completed = [];
+	
+//	var dropdown1 = document.getElementById("dropdown_one");
+//	var dropdown2 = document.getElementById("dropdown_two");
+//	var dropdown3 = document.getElementById("dropdown_three");
+//	exercises_completed.push(dropdown1.options[dropdown1.selectedIndex].text);
+//	exercises_completed.push(dropdown2.options[dropdown2.selectedIndex].text);
+//	exercises_completed.push(dropdown3.options[dropdown3.selectedIndex].text);
+//	console.log("exercises" + exercises_completed);
 
+	document.getElementById("exercises_completed").value = exercises_completed;
 	document.getElementById("total_weight_lifted").value = parseInt(grand_total);
 	var msg = "You lifted: " + parseInt(grand_total) + " this workout!";
 	console.log(msg);

@@ -33,14 +33,9 @@ public class User {
 
 	@Column(name = "primary_bodypart_array")
 	private ArrayList<Integer> primary_bodypart_array;
-
-//	@ElementCollection
-//	@CollectionTable(name = "users_exercises", joinColumns = 
-//		{@JoinColumn(name = "username_id", referencedColumnName = "id") })
-//
-//	@MapKeyColumn(name = "primary_bodypart")
-//	@Column(name = "count")
-//	private Map<String, Integer> primary_exercise_count;
+	
+	@Column(name = "secondary_bodypart_array")
+	private ArrayList<Integer> secondary_bodypart_array;
 
 	public User() {
 		super();
@@ -55,25 +50,44 @@ public class User {
 		this.total_weight_lifted = total_weight_lifted;
 		this.primary_bodypart_array = new ArrayList<Integer>();
 
-		populate_arraylist();
-//		this.primary_exercise_count = new HashMap<String, Integer>();
-//		populate_hashmap();
+		populate_arraylists();
+
 
 	}
 
-	private void populate_arraylist() {
+	private void populate_arraylists() {
 		primary_bodypart_array.add(0, 0);
 		primary_bodypart_array.add(1, 0);
 		primary_bodypart_array.add(2, 0);
-		primary_bodypart_array.add(3, 0);
+		secondary_bodypart_array.add(0, 0);
+		secondary_bodypart_array.add(1, 0);
+		secondary_bodypart_array.add(2, 0);
+		secondary_bodypart_array.add(3, 0);
 	}
 
-	//
-//	private void populate_hashmap() {
-//		primary_exercise_count.put("chest", 0);
-//		primary_exercise_count.put("back", 0);
-//		primary_exercise_count.put("legs", 0);
-//	}
+	public List<Workout> getWorkouts_completed() {
+		return workouts_completed;
+	}
+
+	public void setWorkouts_completed(List<Workout> workouts_completed) {
+		this.workouts_completed = workouts_completed;
+	}
+
+	public ArrayList<Integer> getPrimary_bodypart_array() {
+		return primary_bodypart_array;
+	}
+
+	public void setPrimary_bodypart_array(ArrayList<Integer> primary_bodypart_array) {
+		this.primary_bodypart_array = primary_bodypart_array;
+	}
+
+	public ArrayList<Integer> getSecondary_bodypart_array() {
+		return secondary_bodypart_array;
+	}
+
+	public void setSecondary_bodypart_array(ArrayList<Integer> secondary_bodypart_array) {
+		this.secondary_bodypart_array = secondary_bodypart_array;
+	}
 
 	public String getUsername() {
 		return username;

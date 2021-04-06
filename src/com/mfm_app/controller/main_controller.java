@@ -5,10 +5,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mfm_app.entities.Exercise;
@@ -16,6 +20,7 @@ import com.mfm_app.entities.User;
 import com.mfm_app.entities.Workout;
 import com.mfm_app.services.ExerciseService;
 import com.mfm_app.services.UserService;
+import com.mfm_app.services.WorkoutService;
 
 @Controller
 public class main_controller {
@@ -25,6 +30,11 @@ public class main_controller {
 
 	@Autowired
 	private ExerciseService exercise_service;
+	
+	@Autowired
+	private WorkoutService workout_service;
+	
+	User current_user = new User();
 
 	@RequestMapping({ "/", "/landing_page" })
 	public ModelAndView welcome() {
@@ -43,21 +53,31 @@ public class main_controller {
 		return "profile_page";
 	}
 
-	@RequestMapping("/workout")
-	public ModelAndView workout() {
+	@RequestMapping(path = "/workout", method = RequestMethod.GET )
+	public ModelAndView workout(@ModelAttribute("command") Workout workout) {
 		ModelAndView mav = new ModelAndView("workout");
 		String[] all_exercises = exercise_service.get_all_exercises();
 		mav.addObject("exercises", all_exercises);
 		return mav;
 	}
 	
-	@RequestMapping("/save_workout")
-	public ModelAndView save_workout(@ModelAttribute Workout workout) {
+	@RequestMapping(path = "/save_workout", method = RequestMethod.GET)
+	public ModelAndView save_workout(HttpServletRequest request,
+			@ModelAttribute Workout workout, 
+			@RequestParam String exercise_one_completed,
+			@RequestParam String exercise_two_completed,
+			@RequestParam String exercise_three_completed) {
 		ModelAndView mav = new ModelAndView("profile_page");
 		Workout new_workout = new Workout();
+		int saved_workout;
 		new_workout.setDate_of_workout(new Date());
 		new_workout.setTotal_weight_lifted(workout.getTotal_weight_lifted());
+		new_workout.setExercise_one_completed(exercise_one_completed);
+		new_workout.setExercise_two_completed(exercise_two_completed);
+		new_workout.setExercise_three_completed(exercise_three_completed);	
 		System.out.println(new_workout);
+		saved_workout = workout_service.add_workout(new_workout);		
+		user_service.update_user_workouts(current_user, saved_workout);
 		return mav;
 	}
 	@RequestMapping("/leaderboard")
@@ -89,7 +109,7 @@ public class main_controller {
 	}
 
 	@RequestMapping("/verify_login")
-	public ModelAndView verify_login(@ModelAttribute User user) {
+	public ModelAndView verify_login(@ModelAttribute User user, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		User login_user = new User();
 
@@ -105,6 +125,8 @@ public class main_controller {
 			return mav;
 		} else {
 			mav.addObject("user", login_user);
+			request.getSession().setAttribute("user", login_user);
+			current_user= login_user;
 			mav.setViewName("profile_page");
 			return mav;
 		}
