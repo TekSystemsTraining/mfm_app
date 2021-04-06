@@ -28,12 +28,10 @@
 	</div>
 
 	<div class="about" id="grid">
-		<div class="container" style="width: 50rem">
-			<div class="description"></div>
-			<div class="exercise-container">
-
-
-				<div class="container">
+		<form action="save_workout" method="POST">
+			<div class="container" style="width: 50rem">
+				<div class="description"></div>
+				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
 							<select name="category">
@@ -67,7 +65,7 @@
 							</div>
 							<div class="d-flex justify-content-between total_button">
 								<div>
-									<button onclick="total_exercise(1)"
+									<button onclick="total_exercise(1,false)"
 										class="btn btn-outline-secondary btn-lg " type="button">View
 										Totals</button>
 								</div>
@@ -79,11 +77,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="exercise-container">
-
-
-				<div class="container">
+				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
 							<select name="category">
@@ -117,7 +111,7 @@
 							</div>
 							<div class="d-flex justify-content-between total_button">
 								<div>
-									<button onclick="total_exercise(2)"
+									<button onclick="total_exercise(2,false)"
 										class="btn btn-outline-secondary btn-lg " type="button">View
 										Totals</button>
 								</div>
@@ -129,11 +123,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="exercise-container">
-
-
-				<div class="container">
+				<div class="exercise-container">
 					<div class="row">
 						<div class="col">
 							<select name="category">
@@ -167,7 +157,7 @@
 							</div>
 							<div class="d-flex justify-content-between total_button">
 								<div>
-									<button onclick="total_exercise(3)"
+									<button onclick="total_exercise(3,false)"
 										class="btn btn-outline-secondary btn-lg " type="button">View
 										Totals</button>
 								</div>
@@ -179,39 +169,51 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="d-flex row justify-content-center workout_submit">
-				<button class="btn btn-outline-secondary btn-lg " type="button">Submit
-					Workout</button>
 
-			</div>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal"
-				data-target="#modalCenter">Complete Workout</button>
+				<div class="d-flex row justify-content-center workout_submit">
+					<button type="button" class="btn btn-outline-secondary btn-lg"
+						data-toggle="modal" data-target="#modalCenter"
+						onclick="workout_total()">Complete Workout</button>
 
-			<!-- Modal -->
-			<div class="modal fade" id="modalCenter" tabindex="-1"
-				role="dialog" aria-labelledby="modalCenterTitle"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="modalLongTitle">Complete Workout</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true"></span>
-							</button>
-						</div>
-						<div class="modal-body">Have you entered everything for this workout? If it is complete hit save.</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save</button>
+
+				</div>
+				<!-- Button trigger modal -->
+
+				<!-- Modal -->
+				<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog"
+					aria-labelledby="modalCenterTitle" aria-hidden="true">
+
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modalLongTitle">Complete
+									Workout</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true"></span>
+								</button>
+							</div>
+							<div class="modal-body form-group">
+								<h2 id="total_weight"></h2>
+								<input type="hidden" name="total_weight_lifted" id="total_weight_lifted" value=""/>
+								Have you entered everything for this workout? If it is complete
+								hit save.
+							</div>
+
+
+							<div class="modal-footer form-group">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal" onclick="clear_total()">Close</button>
+								<button type="submit" class="btn btn-primary" type="submit"
+									value="submit">Save</button>
+							</div>
+
 						</div>
 					</div>
+
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 
 </body>

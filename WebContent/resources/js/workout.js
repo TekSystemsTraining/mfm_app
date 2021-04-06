@@ -1,6 +1,7 @@
-console.log("workout js5 loaded")
+console.log("workout js12 loaded")
+var grand_total =0;
 
-function total_exercise(section) {
+function total_exercise(section, grandTotal) {
 	var set_total = [];
 	var exercise_total;
 
@@ -30,5 +31,27 @@ function total_exercise(section) {
 	exercise_total = set_total.reduce(function(a, b) {
 		return a + b;
 	}, 0);
-	document.getElementById("ex-total-" + section).innerHTML = parseInt(exercise_total);
+	if (grandTotal) {
+		grand_total += exercise_total;
+		console.log("grand total in loop", grand_total);
+	}
+	document.getElementById("ex-total-" + section).value = parseInt(
+		exercise_total
+	);
+}
+
+function workout_total() {
+	total_exercise(1, true);
+	total_exercise(2, true);
+	total_exercise(3, true);
+
+	document.getElementById("total_weight_lifted").value = parseInt(grand_total);
+	var msg = "You lifted: " + parseInt(grand_total) + " this workout!";
+	console.log(msg);
+	document.getElementById("total_weight").innerHTML = msg;
+	
+}
+
+function clear_total() {
+	grand_total = 0;
 }

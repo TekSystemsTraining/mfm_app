@@ -2,6 +2,7 @@ package com.mfm_app.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mfm_app.entities.Exercise;
 import com.mfm_app.entities.User;
+import com.mfm_app.entities.Workout;
 import com.mfm_app.services.ExerciseService;
 import com.mfm_app.services.UserService;
 
@@ -48,7 +50,16 @@ public class main_controller {
 		mav.addObject("exercises", all_exercises);
 		return mav;
 	}
-
+	
+	@RequestMapping("/save_workout")
+	public ModelAndView save_workout(@ModelAttribute Workout workout) {
+		ModelAndView mav = new ModelAndView("profile_page");
+		Workout new_workout = new Workout();
+		new_workout.setDate_of_workout(new Date());
+		new_workout.setTotal_weight_lifted(workout.getTotal_weight_lifted());
+		System.out.println(new_workout);
+		return mav;
+	}
 	@RequestMapping("/leaderboard")
 	public ModelAndView leaderboard() {
 		ModelAndView mav = new ModelAndView("leaderboard");

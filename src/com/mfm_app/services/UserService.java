@@ -1,5 +1,7 @@
 package com.mfm_app.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +40,12 @@ public class UserService {
 		}	
 		return null;
 		
+	}
+	
+	public boolean update_user_bodyparts(List<String> exercises) {
+		Boolean return_value = false;
+		
+		
+		return return_value;
 	}
 }
