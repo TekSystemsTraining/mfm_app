@@ -1,10 +1,8 @@
 package com.mfm_app.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mfm_app.entities.Exercise;
+import com.mfm_app.entities.PrimaryBodypartList;
+import com.mfm_app.entities.SecondaryBodypartList;
 import com.mfm_app.entities.User;
 import com.mfm_app.entities.Workout;
 import com.mfm_app.services.ExerciseService;
+import com.mfm_app.services.PrimaryBodyPartService;
+import com.mfm_app.services.SecondaryBodypartService;
 import com.mfm_app.services.UserService;
 import com.mfm_app.services.WorkoutService;
 
@@ -31,10 +33,16 @@ public class main_controller {
 
 	@Autowired
 	private ExerciseService exercise_service;
-	
+
 	@Autowired
 	private WorkoutService workout_service;
-	
+
+	@Autowired
+	private PrimaryBodyPartService primary_bodypart_service;
+
+	@Autowired
+	private SecondaryBodypartService secondary_bodypart_service;
+
 	User current_user = new User();
 
 	@RequestMapping({ "/", "/landing_page" })
@@ -54,19 +62,17 @@ public class main_controller {
 		return "profile_page";
 	}
 
-	@RequestMapping(path = "/workout", method = RequestMethod.GET )
+	@RequestMapping(path = "/workout", method = RequestMethod.GET)
 	public ModelAndView workout(@ModelAttribute("command") Workout workout) {
 		ModelAndView mav = new ModelAndView("workout");
 		String[] all_exercises = exercise_service.get_all_exercises();
 		mav.addObject("exercises", all_exercises);
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/save_workout", method = RequestMethod.GET)
-	public ModelAndView save_workout(HttpServletRequest request,
-			@ModelAttribute Workout workout, 
-			@RequestParam String exercise_one_completed,
-			@RequestParam String exercise_two_completed,
+	public ModelAndView save_workout(HttpServletRequest request, @ModelAttribute Workout workout,
+			@RequestParam String exercise_one_completed, @RequestParam String exercise_two_completed,
 			@RequestParam String exercise_three_completed) {
 		ModelAndView mav = new ModelAndView("profile_page");
 		Workout new_workout = new Workout();
@@ -76,13 +82,14 @@ public class main_controller {
 		new_workout.setTotal_weight_lifted(workout.getTotal_weight_lifted());
 		new_workout.setExercise_one_completed(exercise_one_completed);
 		new_workout.setExercise_two_completed(exercise_two_completed);
-		new_workout.setExercise_three_completed(exercise_three_completed);	
+		new_workout.setExercise_three_completed(exercise_three_completed);
 		System.out.println("Controller workout" + new_workout);
-		saved_workout = workout_service.add_workout(new_workout);		
+		saved_workout = workout_service.add_workout(new_workout);
 		updated_user = user_service.update_user(current_user, saved_workout);
 		request.getSession().setAttribute("user", updated_user);
 		return mav;
 	}
+
 	@RequestMapping("/leaderboard")
 	public ModelAndView leaderboard() {
 		ModelAndView mav = new ModelAndView("leaderboard");
@@ -136,15 +143,22 @@ public class main_controller {
 		} else {
 			mav.addObject("user", login_user);
 			request.getSession().setAttribute("user", login_user);
-			current_user= login_user;
+			current_user = login_user;
 			mav.setViewName("profile_page");
 			return mav;
 		}
 	}
-	
+
 	@RequestMapping("/add_exercise")
-	public String add_exercise() {
-		return "add_exercise";
+	public ModelAndView add_exercise(@ModelAttribute("command") Exercise exercise) {
+		ModelAndView mav = new ModelAndView();
+		String[] pbody = primary_bodypart_service.get_all_primary();
+		String[] sbody = secondary_bodypart_service.get_all_secondary();
+		System.out.println("body parts" + pbody + sbody);
+		mav.addObject("primary_bodypart", pbody);
+		mav.addObject("secondary_bodypart", sbody);
+		mav.setViewName("add_exercise");
+		return mav;
 	}
 
 }

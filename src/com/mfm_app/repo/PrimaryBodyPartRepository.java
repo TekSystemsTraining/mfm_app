@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.mfm_app.entities.PrimaryBodypartList;
 
 @Repository
-public interface PrimaryBodyPartRepository extends JpaRepository<PrimaryBodypartList, String>{
+public interface PrimaryBodypartRepository extends JpaRepository<PrimaryBodypartList, String>{
 
+	
 }

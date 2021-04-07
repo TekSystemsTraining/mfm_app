@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.mfm_app.entities.SecondaryBodypartList;
 
 @Repository
-public interface SecondaryBodyPartRepository extends JpaRepository<SecondaryBodypartList, String> {
+public interface SecondaryBodypartRepository extends JpaRepository<SecondaryBodypartList, String> {
 
 }
