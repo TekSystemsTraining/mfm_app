@@ -160,5 +160,21 @@ public class main_controller {
 		mav.setViewName("add_exercise");
 		return mav;
 	}
+	
+	@RequestMapping("/save_exercise")
+	public ModelAndView save_exercise(@ModelAttribute Exercise exercise,
+			HttpServletRequest request, @RequestParam String primary_bodypart,
+			@RequestParam String secondary_bodypart) {
+		ModelAndView mav = new ModelAndView();
+		Exercise new_exercise = new Exercise();
+		new_exercise.setName(exercise.getName());
+		new_exercise.setPrimary_bodypart(primary_bodypart);
+		new_exercise.setSecondary_bodypart(secondary_bodypart);
+		Boolean result = exercise_service.add_exercise(new_exercise);
+		System.out.println("save exercise result" + result);
+		mav.setViewName("profile_page");
+		return mav;
+	}
+	
 
 }

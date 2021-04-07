@@ -32,4 +32,15 @@ public class ExerciseService {
 		return ex_arr;
 	}
 
+	public boolean add_exercise(Exercise exercise) {
+		Boolean return_value = false;		
+		try {
+			er.save(exercise);
+			return_value = true;
+		}catch(Exception e) {
+
+			e.printStackTrace();
+		}				
+		return return_value;
+	}
 }
