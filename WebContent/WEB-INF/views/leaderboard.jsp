@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -16,7 +18,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/mfm_app/resources/css/leaderboard.css" />
 
-<title>Document</title>
+<title>Leaderboard</title>
 </head>
 <body>
 
@@ -26,52 +28,22 @@
 			<div class="bigwords">
 				<h1>Leaderboard</h1>
 			</div>
+			
 			<div class="container">
 				<h2 style="text-align: center">Top 10 Lifters</h2>
 				<div class="row">
-					<label class="col">Name</label> <label class="col">Avg per
-						workout</label> <label class="col">Total Lifted</label>
+					<label class="col-sm">Place</label><label class="col">Name</label> <label class="col">Total Lifted</label> <label class="col">Total Workouts</label>
 				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
-				<div class="row">
-					<input class="col-sm" placeholder="" /> <input class="col-sm"
-						placeholder="" /> <input class="col-sm" placeholder="" />
-				</div>
+				<c:forEach items="${all_users}" var="u" varStatus="loop">
+					<div class=row>
+						<div class="col-sm">
+							<h4>${loop.index}</h4>
+						</div>
+						<div class="col-sm">${u.username}</div>
+						<div class="col-sm">${u.total_weight_lifted}</div>
+						<div class="col-sm">${u.total_workouts}</div>
+					</div>
+				</c:forEach>				
 			</div>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 package com.mfm_app.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +53,10 @@ public class UserService {
 		user.increase_total_workouts();		
 		ur.save(user);
 		return user;
+	}
+	
+	public List<User> get_all_users(){
+		return ur.findAll();
 	}
 
 	public boolean update_user_bodyparts(List<String> exercises) {

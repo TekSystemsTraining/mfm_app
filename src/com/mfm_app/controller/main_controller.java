@@ -86,6 +86,10 @@ public class main_controller {
 	@RequestMapping("/leaderboard")
 	public ModelAndView leaderboard() {
 		ModelAndView mav = new ModelAndView("leaderboard");
+		List<User> all_users = new ArrayList<>();
+		all_users = user_service.get_all_users();
+		mav.addObject("all_users", all_users);
+		System.out.println("All users" + all_users);
 		return mav;
 	}
 
@@ -136,6 +140,11 @@ public class main_controller {
 			mav.setViewName("profile_page");
 			return mav;
 		}
+	}
+	
+	@RequestMapping("/add_exercise")
+	public String add_exercise() {
+		return "add_exercise";
 	}
 
 }

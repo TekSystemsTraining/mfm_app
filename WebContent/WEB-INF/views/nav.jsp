@@ -16,8 +16,8 @@
 				href="workout">Start Workout</a></li>
 			<li class="nav-item"><a class="nav-link"
 				data-value="leaderboard" href="leaderboard">Leaderboard</a></li>
-			<li class="nav-item"><a class="nav-link" data-value="contact"
-				href="#">Contact</a></li>
+			<li class="nav-item"><a class="nav-link" data-value="add_exercise"
+				href="add_exercise">Add Exercise</a></li>
 			<li class="nav-item"><a class="nav-link" data-value="about"
 				href="#">About</a></li>
 		</ul>
