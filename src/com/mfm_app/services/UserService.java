@@ -1,11 +1,13 @@
 package com.mfm_app.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mfm_app.entities.User;
+import com.mfm_app.entities.Workout;
 import com.mfm_app.repo.UserRepository;
 
 @Service
@@ -17,16 +19,14 @@ public class UserService {
 	@Autowired
 	WorkoutService workout_service;
 
-	public boolean add_user(User user) {
-		boolean return_value = false;
+	public User add_user(User user) {
+		
 		try {
 			ur.save(user);
-
-			return_value = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return return_value;
+		return login_user(user.getUsername(), user.getPassword());
 	}
 
 	public User login_user(String username, String password) {
@@ -45,11 +45,14 @@ public class UserService {
 
 	}
 
-	public boolean update_user_workouts(User user, int wId) {
-		Boolean return_value = false;
-		user.getWorkouts_completed().add(workout_service.get_workout_by_id(wId));
+	public User update_user(User user, Long wId) {
+		Workout update_workout = workout_service.get_workout_by_id(wId);		
+		System.out.println("Uservice workout" + update_workout);
+		user.getWorkouts_completed().add(update_workout);
+		user.increase_total_weight_lifted(update_workout.getTotal_weight_lifted());
+		user.increase_total_workouts();		
 		ur.save(user);
-		return return_value;
+		return user;
 	}
 
 	public boolean update_user_bodyparts(List<String> exercises) {

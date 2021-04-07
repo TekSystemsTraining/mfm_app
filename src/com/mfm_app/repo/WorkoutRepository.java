@@ -1,10 +1,12 @@
 package com.mfm_app.repo;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.mfm_app.entities.Workout;
 
-public interface WorkoutRepository extends JpaRepository<Workout, Integer>{
+public interface WorkoutRepository extends JpaRepository<Workout, Long>{
 	
-	Workout getWorkoutById(Integer id);
+	Workout getWorkoutById(Long id);
 	
 }

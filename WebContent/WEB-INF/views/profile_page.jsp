@@ -70,7 +70,7 @@
                     						You haven't logged a workout yet
                    						 </c:when>
 										<c:otherwise>
-                   							 ${user.total_workouts }
+                   							 ${user.total_weight_lifted/user.total_workouts }
                     					</c:otherwise>
 									</c:choose>
 								</div>

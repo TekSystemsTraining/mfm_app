@@ -21,15 +21,15 @@ public class User {
 	@Column(name = "password", length = 50, nullable = false)
 	private String password;
 
-	@Column(name = "total_workouts", nullable = true)
-	private int total_workouts;
+	@Column(name = "total_workouts")
+	private int total_workouts = 0;
 
-	@Column(name = "total_weight_lifted", nullable = true)
-	private Double total_weight_lifted;
+	@Column(name = "total_weight_lifted")
+	private Double total_weight_lifted =0.0;
 
 	@Column(name = "workouts_completed")
 	@OneToMany(targetEntity = Workout.class)
-	private List<Workout> workouts_completed;
+	private List<Workout> workouts_completed = new ArrayList<>();
 
 	@Column(name = "primary_bodypart_array")
 	private ArrayList<Integer> primary_bodypart_array;
@@ -112,6 +112,13 @@ public class User {
 	public void setTotal_workouts(int total_workouts) {
 		this.total_workouts = total_workouts;
 	}
+	
+	public void increase_total_workouts() {
+		this.total_workouts++;
+	}
+	public void decrease_total_workouts() {
+		this.total_workouts--;
+	}
 
 	public Double getTotal_weight_lifted() {
 		return total_weight_lifted;
@@ -119,6 +126,9 @@ public class User {
 
 	public void setTotal_weight_lifted(Double total_weight_lifted) {
 		this.total_weight_lifted = total_weight_lifted;
+	}
+	public void increase_total_weight_lifted(Double increase_amount) {
+		this.total_weight_lifted = total_weight_lifted + increase_amount;
 	}
 
 	@Override

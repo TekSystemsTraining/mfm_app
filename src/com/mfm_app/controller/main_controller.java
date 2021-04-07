@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,15 +70,17 @@ public class main_controller {
 			@RequestParam String exercise_three_completed) {
 		ModelAndView mav = new ModelAndView("profile_page");
 		Workout new_workout = new Workout();
-		int saved_workout;
+		Long saved_workout;
+		User updated_user;
 		new_workout.setDate_of_workout(new Date());
 		new_workout.setTotal_weight_lifted(workout.getTotal_weight_lifted());
 		new_workout.setExercise_one_completed(exercise_one_completed);
 		new_workout.setExercise_two_completed(exercise_two_completed);
 		new_workout.setExercise_three_completed(exercise_three_completed);	
-		System.out.println(new_workout);
+		System.out.println("Controller workout" + new_workout);
 		saved_workout = workout_service.add_workout(new_workout);		
-		user_service.update_user_workouts(current_user, saved_workout);
+		updated_user = user_service.update_user(current_user, saved_workout);
+		request.getSession().setAttribute("user", updated_user);
 		return mav;
 	}
 	@RequestMapping("/leaderboard")
@@ -92,19 +95,22 @@ public class main_controller {
 	}
 
 	@RequestMapping("/registerUser")
-	public ModelAndView registerUser(@ModelAttribute User user) {
+	public ModelAndView registerUser(@ModelAttribute User user, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		User register_user = new User();
+		User valid_user = new User();
 		register_user.setUsername(user.getUsername());
 		register_user.setPassword(user.getPassword());
 
 		try {
-			user_service.add_user(register_user);
+			valid_user = user_service.add_user(register_user);
 			mav.setViewName("profile_page");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mav.addObject("user", register_user);
+
+		request.getSession().setAttribute("user", valid_user);
+		current_user = valid_user;
 		return mav;
 	}
 
