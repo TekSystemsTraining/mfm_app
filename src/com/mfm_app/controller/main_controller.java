@@ -58,8 +58,13 @@ public class main_controller {
 	}
 
 	@RequestMapping("/profile_page")
-	public String profile_page() {
-		return "profile_page";
+	public ModelAndView profile_page() {
+		ModelAndView mav = new ModelAndView("profile_page");
+		List<Workout> all_workouts = user_service.get_all_workouts_for_user(current_user);		
+		mav.addObject("all_workouts", all_workouts);
+		mav.addObject("user", current_user);
+		System.out.println("all workouts" + all_workouts);
+		return mav;
 	}
 
 	@RequestMapping(path = "/workout", method = RequestMethod.GET)
@@ -144,8 +149,7 @@ public class main_controller {
 			mav.addObject("user", login_user);
 			request.getSession().setAttribute("user", login_user);
 			current_user = login_user;
-			mav.setViewName("profile_page");
-			return mav;
+			return profile_page();
 		}
 	}
 

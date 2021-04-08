@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.mfm_app.entities.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
 	<div class="bigwords">
 		<h1>My stats</h1>
 	</div>
-	<div class="container ">
+	<div class="container profile-layout">
 		<div class="main-body">
 
 
@@ -78,97 +79,45 @@
 
 						</div>
 					</div>
-					<div class="row gutters-sm">
-						<div class="col-sm-6 mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<h6 class="d-flex align-items-center mb-3">
-										<i class="material-icons text-info mr-2">assignment</i>Project
-										Status
-									</h6>
-									<small>Web Design</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Website Markup</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 72%" aria-valuenow="72" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>One Page</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 89%" aria-valuenow="89" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Mobile Template</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Backend API</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 66%" aria-valuenow="66" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<h6 class="d-flex align-items-center mb-3">
-										<i class="material-icons text-info mr-2">assignment</i>Project
-										Status
-									</h6>
-									<small>Web Design</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Website Markup</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 72%" aria-valuenow="72" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>One Page</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 89%" aria-valuenow="89" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Mobile Template</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<small>Backend API</small>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar"
-											style="width: 66%" aria-valuenow="66" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 					<div class="d-flex row justify-content-center">
 						<button class="btn btn-outline-secondary btn-lg " type="button"
 							onclick="location.href='workout'">Start New Workout</button>
 					</div>
+					<div class="card mb-6" style="margin-top: 40px">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm">
+									<h6 class="mb-0">Date completed</h6>
+								</div>
+								<div class="col-sm">
+									<h6 class="mb-0">Total Weight lifted</h6>
+								</div>
+								<div class="col-sm">
+									<h6 class="mb-0">Delete Workout</h6>
+								</div>
+							</div>
+							<hr>
+							<c:forEach items="${all_workouts}" var="w">
+								<div class="row">
+									<div class="col-sm">
+										<div><fmt:formatDate value="${w.date_of_workout}" type="date" pattern="dd-MMM-yyyy"/></div>
+									</div>
+									<div class="col-sm">
+										<div>${w.total_weight_lifted}</div>
+									</div>
+									<div class="col-sm">
+										<div><button class="btn btn-outline-secondary">Delete</button></div>
+									</div>
+
+								</div>
+							<hr>
+							</c:forEach>
+						</div>
+					</div>
 
 				</div>
-
 			</div>
 		</div>
-	</div>
 </body>
 </html>

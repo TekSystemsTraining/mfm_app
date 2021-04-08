@@ -58,6 +58,12 @@ public class UserService {
 	public List<User> get_all_users(){
 		return ur.findAll();
 	}
+	
+	public List<Workout> get_all_workouts_for_user(User user){
+		List<Workout> all_workouts = new ArrayList<>();
+		all_workouts = user.getWorkouts_completed();
+		return all_workouts;
+	}
 
 	public boolean update_user_bodyparts(List<String> exercises) {
 		Boolean return_value = false;
