@@ -130,6 +130,9 @@ public class User {
 	public void increase_total_weight_lifted(Double increase_amount) {
 		this.total_weight_lifted = total_weight_lifted + increase_amount;
 	}
+	public void decrease_total_weight_lifted(Double decrease_amount) {
+		this.total_weight_lifted = total_weight_lifted - decrease_amount;
+	}
 
 	@Override
 	public int hashCode() {

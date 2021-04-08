@@ -35,5 +35,17 @@ public class WorkoutService {
 		return wr.getWorkoutById(wId);
 	}
 	
+	public Boolean delete_workout(Long id) {
+		Boolean result = false;
+		
+		try {
+			wr.deleteById(id);
+			result = true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }

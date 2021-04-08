@@ -1,6 +1,8 @@
 package com.mfm_app.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,12 @@ public class UserService {
 
 	@Autowired
 	UserRepository ur;
-	
+
 	@Autowired
 	WorkoutService workout_service;
 
 	public User add_user(User user) {
-		
+
 		try {
 			ur.save(user);
 		} catch (Exception e) {
@@ -45,23 +47,41 @@ public class UserService {
 
 	}
 
-	public User update_user(User user, Long wId) {
-		Workout update_workout = workout_service.get_workout_by_id(wId);		
-		System.out.println("Uservice workout" + update_workout);
+	public User update_user_increase(User user, Long wId) {
+		Workout update_workout = workout_service.get_workout_by_id(wId);
 		user.getWorkouts_completed().add(update_workout);
 		user.increase_total_weight_lifted(update_workout.getTotal_weight_lifted());
-		user.increase_total_workouts();		
+		user.increase_total_workouts();
 		ur.save(user);
 		return user;
 	}
 	
-	public List<User> get_all_users(){
-		return ur.findAll();
+	public User update_user_decrease(User user, Long wId) {
+		Workout update_workout = workout_service.get_workout_by_id(wId);
+		user.getWorkouts_completed().remove(update_workout);
+		user.decrease_total_weight_lifted(update_workout.getTotal_weight_lifted());
+		user.decrease_total_workouts();
+		ur.save(user);
+		return user;
 	}
-	
-	public List<Workout> get_all_workouts_for_user(User user){
+
+	public List<User> get_all_users() {
+		List<User> user_list = new ArrayList<>();
+		user_list = ur.findAllSorted();
+
+		;
+		return user_list;
+	}
+
+	public List<Workout> get_all_workouts_for_user(User user) {
 		List<Workout> all_workouts = new ArrayList<>();
+
 		all_workouts = user.getWorkouts_completed();
+		Collections.sort(all_workouts, new Comparator<Workout>() {
+			public int compare(Workout o1, Workout o2) {
+				return o2.getDate_of_workout().compareTo(o1.getDate_of_workout());
+			}
+		});
 		return all_workouts;
 	}
 
@@ -70,4 +90,5 @@ public class UserService {
 
 		return return_value;
 	}
+
 }

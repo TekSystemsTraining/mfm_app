@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,7 +61,7 @@ public class main_controller {
 	@RequestMapping("/profile_page")
 	public ModelAndView profile_page() {
 		ModelAndView mav = new ModelAndView("profile_page");
-		List<Workout> all_workouts = user_service.get_all_workouts_for_user(current_user);		
+		List<Workout> all_workouts = user_service.get_all_workouts_for_user(current_user);
 		mav.addObject("all_workouts", all_workouts);
 		mav.addObject("user", current_user);
 		System.out.println("all workouts" + all_workouts);
@@ -79,7 +80,6 @@ public class main_controller {
 	public ModelAndView save_workout(HttpServletRequest request, @ModelAttribute Workout workout,
 			@RequestParam String exercise_one_completed, @RequestParam String exercise_two_completed,
 			@RequestParam String exercise_three_completed) {
-		ModelAndView mav = new ModelAndView("profile_page");
 		Workout new_workout = new Workout();
 		Long saved_workout;
 		User updated_user;
@@ -90,9 +90,26 @@ public class main_controller {
 		new_workout.setExercise_three_completed(exercise_three_completed);
 		System.out.println("Controller workout" + new_workout);
 		saved_workout = workout_service.add_workout(new_workout);
-		updated_user = user_service.update_user(current_user, saved_workout);
+		updated_user = user_service.update_user_increase(current_user, saved_workout);
 		request.getSession().setAttribute("user", updated_user);
-		return mav;
+		current_user = updated_user;
+		return profile_page();
+	}
+	
+	@RequestMapping(value = "/delete_workout/{id}" )
+	public ModelAndView delete_workout(	@PathVariable("id") Long delete_id, HttpServletRequest request) {
+		System.out.println("button id" + delete_id);
+//		Boolean result = workout_service.
+		User updated_user = user_service.update_user_decrease(current_user, delete_id);
+		request.getSession().setAttribute("user", updated_user);
+		current_user = updated_user;
+		Boolean delete_result =  workout_service.delete_workout(delete_id);
+		if(delete_result) {
+			System.out.println("Successfully deleted workout");
+		}else {
+			System.out.println("Couldnt delete workout");
+		}
+		return profile_page();
 	}
 
 	@RequestMapping("/leaderboard")
@@ -112,7 +129,7 @@ public class main_controller {
 
 	@RequestMapping("/registerUser")
 	public ModelAndView registerUser(@ModelAttribute User user, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
+
 		User register_user = new User();
 		User valid_user = new User();
 		register_user.setUsername(user.getUsername());
@@ -120,14 +137,14 @@ public class main_controller {
 
 		try {
 			valid_user = user_service.add_user(register_user);
-			mav.setViewName("profile_page");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		request.getSession().setAttribute("user", valid_user);
 		current_user = valid_user;
-		return mav;
+		return profile_page();
 	}
 
 	@RequestMapping("/verify_login")
@@ -164,11 +181,10 @@ public class main_controller {
 		mav.setViewName("add_exercise");
 		return mav;
 	}
-	
+
 	@RequestMapping("/save_exercise")
-	public ModelAndView save_exercise(@ModelAttribute Exercise exercise,
-			HttpServletRequest request, @RequestParam String primary_bodypart,
-			@RequestParam String secondary_bodypart) {
+	public ModelAndView save_exercise(@ModelAttribute Exercise exercise, HttpServletRequest request,
+			@RequestParam String primary_bodypart, @RequestParam String secondary_bodypart) {
 		ModelAndView mav = new ModelAndView();
 		Exercise new_exercise = new Exercise();
 		new_exercise.setName(exercise.getName());
@@ -179,6 +195,5 @@ public class main_controller {
 		mav.setViewName("profile_page");
 		return mav;
 	}
-	
 
 }

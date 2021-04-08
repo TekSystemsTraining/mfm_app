@@ -2,7 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.mfm_app.entities.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <html lang="en">
 <head>
@@ -85,35 +87,45 @@
 							onclick="location.href='workout'">Start New Workout</button>
 					</div>
 					<div class="card mb-6" style="margin-top: 40px">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-sm">
-									<h6 class="mb-0">Date completed</h6>
-								</div>
-								<div class="col-sm">
-									<h6 class="mb-0">Total Weight lifted</h6>
-								</div>
-								<div class="col-sm">
-									<h6 class="mb-0">Delete Workout</h6>
-								</div>
-							</div>
-							<hr>
-							<c:forEach items="${all_workouts}" var="w">
+						<form:form action="delete_workout" method="POST">
+							<div class="card-body">
 								<div class="row">
 									<div class="col-sm">
-										<div><fmt:formatDate value="${w.date_of_workout}" type="date" pattern="dd-MMM-yyyy"/></div>
+										<h6 class="mb-0">Date completed</h6>
 									</div>
 									<div class="col-sm">
-										<div>${w.total_weight_lifted}</div>
+										<h6 class="mb-0">Total Weight lifted</h6>
 									</div>
 									<div class="col-sm">
-										<div><button class="btn btn-outline-secondary">Delete</button></div>
+										<h6 class="mb-0">Delete Workout</h6>
 									</div>
-
 								</div>
-							<hr>
-							</c:forEach>
-						</div>
+								<hr>
+								<c:forEach items="${all_workouts}" var="w">
+									<div class="row">
+										<div class="col-sm">
+											<div>
+												<fmt:formatDate value="${w.date_of_workout}" type="date"
+													pattern="dd-MMM-yyyy" />
+											</div>
+										</div>
+										<div class="col-sm">
+											<div>${w.total_weight_lifted}</div>
+										</div>
+										<div class="col-sm">
+											<div>
+												<button type="button" class="btn btn-outline-secondary">
+													<a href="<c:url value='/delete_workout/${w.id}'/>">Delete</a>
+												</button>
+
+											</div>
+										</div>
+
+									</div>
+									<hr>
+								</c:forEach>
+							</div>
+						</form:form>
 					</div>
 
 				</div>
