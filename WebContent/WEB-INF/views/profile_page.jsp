@@ -25,6 +25,12 @@
 <title>My Profile</title>
 </head>
 <body>
+	<%
+	if (session.getAttribute("user") == null) {
+		session.setAttribute("error", "Must be logged in to access that page");
+		response.sendRedirect("login");
+	}
+	%>
 
 	<%@ include file="nav.jsp"%>
 	<div class="bigwords">
@@ -131,5 +137,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

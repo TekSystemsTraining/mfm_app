@@ -49,6 +49,7 @@ public class UserService {
 
 	public User update_user_increase(User user, Long wId) {
 		Workout update_workout = workout_service.get_workout_by_id(wId);
+		System.out.println("=============" + update_workout);
 		user.getWorkouts_completed().add(update_workout);
 		user.increase_total_weight_lifted(update_workout.getTotal_weight_lifted());
 		user.increase_total_workouts();

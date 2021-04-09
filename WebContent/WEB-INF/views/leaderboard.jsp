@@ -37,7 +37,7 @@
 				<c:forEach items="${all_users}" var="u" varStatus="loop">
 					<div class=row>
 						<div class="col-sm">
-							<h4>${loop.index}</h4>
+							<h4>${loop.index + 1}</h4>
 						</div>
 						<div class="col-sm">${u.username}</div>
 						<div class="col-sm">${u.total_weight_lifted}</div>

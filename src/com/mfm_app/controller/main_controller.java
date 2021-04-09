@@ -29,6 +29,8 @@ import com.mfm_app.services.WorkoutService;
 @Controller
 public class main_controller {
 
+	
+	//services
 	@Autowired
 	private UserService user_service;
 
@@ -44,38 +46,47 @@ public class main_controller {
 	@Autowired
 	private SecondaryBodypartService secondary_bodypart_service;
 
-	User current_user = new User();
 
+
+	//main landing page
 	@RequestMapping({ "/", "/landing_page" })
-	public ModelAndView welcome() {
+	public ModelAndView welcome(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("landing_page");
+		//clearing errors if we hit this page before trying to log in again
+		request.getSession().setAttribute("error", "");
 		return mav;
 	}
 
 	@RequestMapping("/login")
-	public ModelAndView login() {
+	public ModelAndView login(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login");
 		return mav;
 	}
 
+	
+	// main profile page for a user
 	@RequestMapping("/profile_page")
-	public ModelAndView profile_page() {
+	public ModelAndView profile_page(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("profile_page");
-		List<Workout> all_workouts = user_service.get_all_workouts_for_user(current_user);
+		//get the list of all workouts to be displayed on the page
+		List<Workout> all_workouts = user_service.get_all_workouts_for_user((User)request.getSession().getAttribute("user"));
 		mav.addObject("all_workouts", all_workouts);
-		mav.addObject("user", current_user);
-		System.out.println("all workouts" + all_workouts);
+		mav.addObject("user", (User)request.getSession().getAttribute("user"));
 		return mav;
 	}
 
+	
+	//route to page for entering workouts
 	@RequestMapping(path = "/workout", method = RequestMethod.GET)
 	public ModelAndView workout(@ModelAttribute("command") Workout workout) {
 		ModelAndView mav = new ModelAndView("workout");
+		//get all the exercises available in the system
 		String[] all_exercises = exercise_service.get_all_exercises();
 		mav.addObject("exercises", all_exercises);
 		return mav;
 	}
 
+	//saving a workout
 	@RequestMapping(path = "/save_workout", method = RequestMethod.GET)
 	public ModelAndView save_workout(HttpServletRequest request, @ModelAttribute Workout workout,
 			@RequestParam String exercise_one_completed, @RequestParam String exercise_two_completed,
@@ -83,42 +94,46 @@ public class main_controller {
 		Workout new_workout = new Workout();
 		Long saved_workout;
 		User updated_user;
+		//setting all variables
 		new_workout.setDate_of_workout(new Date());
 		new_workout.setTotal_weight_lifted(workout.getTotal_weight_lifted());
 		new_workout.setExercise_one_completed(exercise_one_completed);
 		new_workout.setExercise_two_completed(exercise_two_completed);
 		new_workout.setExercise_three_completed(exercise_three_completed);
-		System.out.println("Controller workout" + new_workout);
+		//adding the workout to the workout table
 		saved_workout = workout_service.add_workout(new_workout);
-		updated_user = user_service.update_user_increase(current_user, saved_workout);
+		//saving the workout to the current users list of workouts
+		updated_user = user_service.update_user_increase((User)request.getSession().getAttribute("user"), saved_workout);
 		request.getSession().setAttribute("user", updated_user);
-		current_user = updated_user;
-		return profile_page();
+		//route back to the profile_page after saving
+		return profile_page(request);
 	}
-	
-	@RequestMapping(value = "/delete_workout/{id}" )
-	public ModelAndView delete_workout(	@PathVariable("id") Long delete_id, HttpServletRequest request) {
-		System.out.println("button id" + delete_id);
-//		Boolean result = workout_service.
-		User updated_user = user_service.update_user_decrease(current_user, delete_id);
+
+	@RequestMapping(value = "/delete_workout/{id}")
+	public String delete_workout(@PathVariable("id") Long delete_id, HttpServletRequest request) {
+		//remove the id from the list of workouts the user has
+		User updated_user = user_service.update_user_decrease((User)request.getSession().getAttribute("user"), delete_id);
+		//delete the workout from the workout table
+		Boolean delete_result = workout_service.delete_workout(delete_id);
+
+		//reset the user to the session
 		request.getSession().setAttribute("user", updated_user);
-		current_user = updated_user;
-		Boolean delete_result =  workout_service.delete_workout(delete_id);
-		if(delete_result) {
+		if (delete_result) {
 			System.out.println("Successfully deleted workout");
-		}else {
+		} else {
 			System.out.println("Couldnt delete workout");
 		}
-		return profile_page();
+		//route back to the profile_page after deleting
+		return "redirect:/profile_page";
 	}
 
 	@RequestMapping("/leaderboard")
 	public ModelAndView leaderboard() {
 		ModelAndView mav = new ModelAndView("leaderboard");
+		//get all users for the leaderboard. Already sorted with query
 		List<User> all_users = new ArrayList<>();
 		all_users = user_service.get_all_users();
 		mav.addObject("all_users", all_users);
-		System.out.println("All users" + all_users);
 		return mav;
 	}
 
@@ -143,8 +158,7 @@ public class main_controller {
 		}
 
 		request.getSession().setAttribute("user", valid_user);
-		current_user = valid_user;
-		return profile_page();
+		return profile_page(request);
 	}
 
 	@RequestMapping("/verify_login")
@@ -160,13 +174,13 @@ public class main_controller {
 		}
 		if (login_user == null) {
 			mav.setViewName("login");
-			mav.addObject("error", "Login failed, please try again");
+			request.getSession().setAttribute("error", "Login failed, please try again");
 			return mav;
 		} else {
 			mav.addObject("user", login_user);
 			request.getSession().setAttribute("user", login_user);
-			current_user = login_user;
-			return profile_page();
+			request.getSession().setAttribute("error", "");
+			return profile_page(request);
 		}
 	}
 
@@ -175,7 +189,6 @@ public class main_controller {
 		ModelAndView mav = new ModelAndView();
 		String[] pbody = primary_bodypart_service.get_all_primary();
 		String[] sbody = secondary_bodypart_service.get_all_secondary();
-		System.out.println("body parts" + pbody + sbody);
 		mav.addObject("primary_bodypart", pbody);
 		mav.addObject("secondary_bodypart", sbody);
 		mav.setViewName("add_exercise");
@@ -191,7 +204,6 @@ public class main_controller {
 		new_exercise.setPrimary_bodypart(primary_bodypart);
 		new_exercise.setSecondary_bodypart(secondary_bodypart);
 		Boolean result = exercise_service.add_exercise(new_exercise);
-		System.out.println("save exercise result" + result);
 		mav.setViewName("profile_page");
 		return mav;
 	}

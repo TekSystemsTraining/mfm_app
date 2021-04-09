@@ -23,6 +23,12 @@
 	href="/mfm_app/resources/css/login.css" />
 </head>
 <body>
+	<%
+	if (session.getAttribute("user") == null) {
+		session.setAttribute("error", "Must be logged in to access that page");
+		response.sendRedirect("login");
+	}
+	%>
 	<%@ include file="nav.jsp"%>
 	<div id="login">
 		<form:form action="save_exercise" method="GET">
@@ -33,25 +39,37 @@
 						<div id="login-box" class="col-md-12">
 							<form id="login-form" class="form" action="add_exercise"
 								method="post">
-								<h3 class="text-center text-info">Add Exercise</h3>
+								<h3 class="text-center">Add Exercise</h3>
 								<div class="form-group">
-									<label for="name" class="text-info">Exercise name: </label><br>
+									<label for="name" class="">Exercise name: </label><br>
 									<input type="text" name="name" id="name" class="form-control">
 								</div>
-								<form:select path="primary_bodypart">
-									<form:option value="" label="--Select--" />
+								<div class="row d-flex justify-content-around">
 
-									<form:options items="${primary_bodypart}" itemsValue="name" />
+									<label for="name" class="">Choose Primary
+										Bodypart</label><br> <label for="name" class="">Choose
+										Secondary Bodypart</label> <br>
+								</div>
 
-								</form:select>
-								<form:select path="secondary_bodypart">
-									<form:option value="" label="--Select--" />
+								<div class="row d-flex justify-content-around">
+									<form:select path="primary_bodypart">
 
-									<form:options items="${secondary_bodypart}" itemsValue="name" />
+										<form:option value="" label="--Select--" />
 
-								</form:select>
-								<div class="form-group">
-									<input type="submit" name="submit" class="btn btn-info btn-md"
+										<form:options items="${primary_bodypart}" itemsValue="name" />
+
+									</form:select>
+									<form:select path="secondary_bodypart">
+										<form:option value="" label="--Select--" />
+
+										<form:options items="${secondary_bodypart}" itemsValue="name" />
+
+									</form:select>
+								</div>
+
+
+								<div class="d-flex justify-content-around" style="margin-top: 45px">
+									<input type="submit" name="submit" class="btn btn-outline-secondary btn-md"
 										value="submit">
 								</div>
 

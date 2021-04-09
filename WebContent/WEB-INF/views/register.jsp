@@ -28,25 +28,25 @@
 				<div id="login-column" class="col-md-6">
 					<div id="login-box" class="col-md-12" style="height: 420px">
 						<form id="login-form" class="form" action="registerUser"  method="POST">
-							<h3 class="text-center text-info">Register</h3>
+							<h3 class="text-center second_color">Register</h3>
 							<div class="form-group">
-								<label for="username" class="text-info">Username:</label><br>
+								<label for="username" class="second_color">Username:</label><br>
 								<input type="text" name="username" id="username"
 									class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="password" class="text-info">Password:</label><br>
+								<label for="password" class="second_color">Password:</label><br>
 								<input type="password" name="password" id="password"
 									class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="confirm_password" class="text-info">Confirm
+								<label for="confirm_password" class="second_color">Confirm
 									Password:</label><br> <input type="password" name="confirm_password"
 									id="confirm_password" class="form-control">
 							</div>
 							<div class="form-group">
 								<br> <input type="submit" name="submit"
-									class="btn btn-info btn-md" value="submit">
+									class="btn btn-outline-secondary btn-md" value="submit">
 							</div>
 
 						</form>
